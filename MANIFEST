@@ -3,4 +3,6 @@ MANIFEST
 Makefile.PL
 README
 lib/Test/STD/Scrub.pm
+t/Test/STD/Scrub.d
+t/Test/STD/Scrub.pm
 t/Test/STD/Scrub.t

@@ -10,31 +10,33 @@ use warnings;
 use warnings::register;
 
 use vars qw($VERSION $DATE $FILE );
-$VERSION = '0.01';
-$DATE = '2003/06/19';
+$VERSION = '0.02';
+$DATE = '2003/07/04';
 $FILE = __FILE__;
 
 use vars qw(%INVENTORY);
 %INVENTORY = (
-    'lib/Docs/Site_SVD/Test_STD_Scrub.pm' => [qw(0.01 2003/06/19), 'revised 0.04'],
-    'MANIFEST' => [qw(0.01 2003/06/19), 'generated, replaces 0.04'],
-    'Makefile.PL' => [qw(0.01 2003/06/19), 'generated, replaces 0.04'],
-    'README' => [qw(0.01 2003/06/19), 'generated, replaces 0.04'],
-    'lib/Test/STD/Scrub.pm' => [qw(1.07 2003/06/19), 'revised 1.06'],
-    't/Test/STD/Scrub.t' => [qw(0.04 2003/06/19), 'revised 0.03'],
+    'lib/Docs/Site_SVD/Test_STD_Scrub.pm' => [qw(0.02 2003/07/04), 'revised 0.01'],
+    'MANIFEST' => [qw(0.02 2003/07/04), 'generated, replaces 0.01'],
+    'Makefile.PL' => [qw(0.02 2003/07/04), 'generated, replaces 0.01'],
+    'README' => [qw(0.02 2003/07/04), 'generated, replaces 0.01'],
+    'lib/Test/STD/Scrub.pm' => [qw(1.08 2003/07/04), 'revised 1.07'],
+    't/Test/STD/Scrub.d' => [qw(0.01 2003/07/04), 'new'],
+    't/Test/STD/Scrub.pm' => [qw(0.01 2003/07/04), 'new'],
+    't/Test/STD/Scrub.t' => [qw(0.05 2003/07/04), 'revised 0.04'],
 
 );
 
 ########
-# The SVD::SVDmaker module uses the data after the __DATA__ 
-# token to automatically generate the this file.
+# The ExtUtils::SVDmaker module uses the data after the __DATA__ 
+# token to automatically generate this file.
 #
 # Don't edit anything before __DATA_. Edit instead
 # the data after the __DATA__ token.
 #
 # ANY CHANGES MADE BEFORE the  __DATA__ token WILL BE LOST
 #
-# the next time SVD::SVDmaker generates this file.
+# the next time ExtUtils::SVDmaker generates this file.
 #
 #
 
@@ -48,11 +50,11 @@ use vars qw(%INVENTORY);
 
  Test::STD::Scrub - Utilites to wild card parts of a text file for comparisons
 
- Revision: -
+ Revision: A
 
- Version: 0.01
+ Version: 0.02
 
- Date: 2003/06/19
+ Date: 2003/07/04
 
  Prepared for: General Public 
 
@@ -67,31 +69,19 @@ use vars qw(%INVENTORY);
 This paragraph identifies and provides an overview
 of the released files.
 
-=head2 1.1 Indentification
+=head2 1.1 Identification
 
-This release is a collection of Perl modules that
+This release,
+identified in L<3.2|/3.2 Inventory of software contents>,
+is a collection of Perl modules that
 extend the capabilities of the Perl language.
 
 =head2 1.2 System overview
 
 The system is the Perl programming language software.
-The system does not have any hardware.
-The Perl programming language contains two features that
-are utilized by this release:
-
-=over 4
-
-=item 1
-
-Program Modules to extend the languages
-
-=item 2
-
-Plain Old Documentation (POD) that may be embedded in the language
-
-=back
-
-These features are established by the referenced documents.
+As established by the Perl referenced documents,
+program modules, such the 
+"L<Test::STD::Scrub|Test::STD::Scrub>" module, extend the Perl language.
 
 When comparing text there are small snippets such as version numbers and dates
 that should be wild carded out and not influence the comparisions.
@@ -110,15 +100,15 @@ of the 2167A  modules "Test::STDmaker" (testing) and "ExtUtils::SVDmaker"
 
 The dependency of the program modules in the US DOD STD2167A bundle is as follows:
  
- File::FileUtil 
+ File::Package File::SmartNL File::TestPath 
    Test::STD::Scrub
      Test::Tech
-        DataPort::FileType::FormDB DataPort::DataFile Test::STD::STDutil
+        DataPort::FileType::FormDB DataPort::DataFile DataPort::Maker Test::STD::STDutil
             Test::STDmaker ExtUtils::SVDmaker
 
 =head2 1.3 Document overview.
 
-This document releases Test::STD-Scrub version 0.01
+This document releases Test::STD-Scrub version 0.02
 providing a description of the inventory, installation
 instructions and other information necessary to
 utilize and track this release.
@@ -131,24 +121,27 @@ system file specification.
 
 =head2 3.1 Inventory of materials released.
 
-=head2 3.1.1 Files.
-
 This document releases the file found
-at the following repository:
+at the following repository(s):
 
-   http://www.softwarediamonds/packages/Test-STD-Scrub-0.01
-   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Test-STD-Scrub-0.01
+   http://www.softwarediamonds/packages/Test-STD-Scrub-0.02
+   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Test-STD-Scrub-0.02
 
 
-=head2 3.1.2 Copyright.
+Restrictions regarding duplication and license provisions
+are as follows:
+
+=over 4
+
+=item Copyright.
 
 copyright © 2003 Software Diamonds
 
-=head2 3.1.3 Copyright holder contact.
+=item Copyright holder contact.
 
  603 882-0846 E<lt>support@SoftwareDiamonds.comE<gt>
 
-=head2 3.1.4 License.
+=item License.
 
 Software Diamonds permits the redistribution
 and use in source and binary forms, with or
@@ -191,6 +184,8 @@ OR TORT (INCLUDING USE OF THIS SOFTWARE, EVEN IF
 ADVISED OF NEGLIGENCE OR OTHERWISE) ARISING IN
 ANY WAY OUT OF THE POSSIBILITY OF SUCH DAMAGE.
 
+=back
+
 =head2 3.2 Inventory of software contents
 
 The content of the released, compressed, archieve file,
@@ -198,17 +193,23 @@ consists of the following files:
 
  file                                                         version date       comment
  ------------------------------------------------------------ ------- ---------- ------------------------
- lib/Docs/Site_SVD/Test_STD_Scrub.pm                          0.01    2003/06/19 revised 0.04
- MANIFEST                                                     0.01    2003/06/19 generated, replaces 0.04
- Makefile.PL                                                  0.01    2003/06/19 generated, replaces 0.04
- README                                                       0.01    2003/06/19 generated, replaces 0.04
- lib/Test/STD/Scrub.pm                                        1.07    2003/06/19 revised 1.06
- t/Test/STD/Scrub.t                                           0.04    2003/06/19 revised 0.03
+ lib/Docs/Site_SVD/Test_STD_Scrub.pm                          0.02    2003/07/04 revised 0.01
+ MANIFEST                                                     0.02    2003/07/04 generated, replaces 0.01
+ Makefile.PL                                                  0.02    2003/07/04 generated, replaces 0.01
+ README                                                       0.02    2003/07/04 generated, replaces 0.01
+ lib/Test/STD/Scrub.pm                                        1.08    2003/07/04 revised 1.07
+ t/Test/STD/Scrub.d                                           0.01    2003/07/04 new
+ t/Test/STD/Scrub.pm                                          0.01    2003/07/04 new
+ t/Test/STD/Scrub.t                                           0.05    2003/07/04 revised 0.04
 
 
 =head2 3.3 Changes
 
 The changes to the previous version are as follows:
+
+=over 4
+
+=item Test::STD::Scrub 0.01
 
 =over 4
 
@@ -231,6 +232,12 @@ created this module Test::STD::Scrub.
 =item new methods
 
 Added the scrub_data and scrub_probe methods
+
+=back
+
+=item Test::STD::Scrub 0.01
+
+Use the new modules from the break-up of the "File::FileUtil" module
 
 =back
 
@@ -258,6 +265,13 @@ test of this release.
 
 =head2 3.6 Installation instructions.
 
+Instructions for installation, installation tests
+and installation support are as follows:
+
+=over 4
+
+=item Installation Instructions.
+
 To installed the release file, use the CPAN module in the Perl release
 or the INSTALL.PL script at the following web site:
 
@@ -267,32 +281,39 @@ Follow the instructions for the the chosen installation software.
 
 The distribution file is at the following respositories:
 
-   http://www.softwarediamonds/packages/Test-STD-Scrub-0.01
-   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Test-STD-Scrub-0.01
+   http://www.softwarediamonds/packages/Test-STD-Scrub-0.02
+   http://www.perl.com/CPAN-local/authors/id/S/SO/SOFTDIA/Test-STD-Scrub-0.02
 
 
-=head2 3.6.1 Installation support.
+=item Prerequistes.
 
-If there are installation problems or questions with the installation
-contact
+ 'File::TestPath' => '0',
+ 'File::SmartNL' => '0',
+ 'File::Package' => '0',
+ 'Test::Tech' => '1.08',
 
- 603 882-0846 E<lt>support@SoftwareDiamonds.comE<gt>
 
-=head2 3.6.2 Installation Tests.
+=item Security, privacy, or safety precautions.
+
+None.
+
+=item Installation Tests.
 
 Most Perl installation software will run the following test script(s)
 as part of the installation:
 
  t/Test/STD/Scrub.t
 
-=head2 3.7 Possible problems and known errors
+=item Installation support.
 
-The Test::STD::TestUtil program module is the foundation
-program module for testing
-and must be rock solid to ensure the quality of
-the Units that it will be testing.
-Testing of this module should be proactive and
-not dumped upon the end-user.
+If there are installation problems or questions with the installation
+contact
+
+ 603 882-0846 E<lt>support@SoftwareDiamonds.comE<gt>
+
+=back
+
+=head2 3.7 Possible problems and known errors
 
 There is still much work needed to ensure the quality 
 of this module as follows:
@@ -325,14 +346,6 @@ Test::TestUtil POD.
 
 =back
 
-Note the 
-L<File::FileUtil|File::FileUtil>, 
-L<Test::STD::STDutil|Test::STD::STDutil> 
-L<Test::STD::Scrub|Test::STD::Scrub> 
-program modules breaks up 
-the Test::TestUtil program module
-and Test::TestUtil has disappeared.
-
 =head1 4.0 NOTES
 
 The following are useful acronyms:
@@ -355,9 +368,9 @@ extension for a Perl test script file
 
 Data Item Description
 
-=item POD
+=item DOD
 
-Plain Old Documentation
+Department of Defense
 
 =item STD
 
@@ -367,128 +380,15 @@ Software Test Description
 
 Software Version Description
 
+=item US
+
+United States
+
 =back
 
 =head1 2.0 SEE ALSO
 
-Modules with end-user functional interfaces 
-relating to US DOD 2167A automation are
-as follows:
-
-=over 4
-
-=item L<Test::STDmaker|Test::STDmaker>
-
-=item L<ExtUtils::SVDmaker|ExtUtils::SVDmaker>
-
-=item L<DataPort::FileType::FormDB|DataPort::FileType::FormDB>
-
-=item L<DataPort::DataFile|DataPort::DataFile>
-
-=item L<Test::Tech|Test::Tech>
-
-=item L<Test|Test>
-
-=item L<Data::Dumper|Data::Dumper>
-
-=item L<Test::STD::Scrub|Test::STD::Scrub>
-
-=item L<Test::STD::STDutil|Test::STD::STDutil>
-
-=item L<File::FileUtil|File::FileUtil>
-
-=back
-
-The design modules for L<Test::STDmaker|Test::STDmaker>
-have no other conceivable use then to support the
-L<Test::STDmaker|Test::STDmaker> functional interface. 
-The  L<Test::STDmaker|Test::STDmaker>
-design modules are as follows:
-
-=over 4
-
-=item L<Test::STD::Check|Test::STD::Check>
-
-=item L<Test::STD::FileGen|Test::STD::FileGen>
-
-=item L<Test::STD::STD2167|Test::STD::STD2167>
-
-=item L<Test::STD::STDgen|Test::STD::STDgen>
-
-=item L<Test::STDtype::Demo|Test::STDtype::Demo>
-
-=item L<Test::STDtype::STD|Test::STDtype::STD>
-
-=item L<Test::STDtype::Verify|Test::STDtype::Verify>
-
-=back
-
-
-Some US DOD 2167A Software Development Standard, DIDs and
-other related documents that complement the 
-US DOD 2167A automation are as follows:
-
-=over 4
-
-=item L<US DOD Software Development Standard|Docs::US_DOD::STD2167A>
-
-=item L<US DOD Specification Practices|Docs::US_DOD::STD490A>
-
-=item L<Computer Operation Manual (COM) DID|Docs::US_DOD::COM>
-
-=item L<Computer Programming Manual (CPM) DID)|Docs::US_DOD::CPM>
-
-=item L<Computer Resources Integrated Support Document (CRISD) DID|Docs::US_DOD::CRISD>
-
-=item L<Computer System Operator's Manual (CSOM) DID|Docs::US_DOD::CSOM>
-
-=item L<Database Design Description (DBDD) DID|Docs::US_DOD::DBDD>
-
-=item L<Engineering Change Proposal (ECP) DID|Docs::US_DOD::ECP>
-
-=item L<Firmware support Manual (FSM) DID|Docs::US_DOD::FSM>
-
-=item L<Interface Design Document (IDD) DID|Docs::US_DOD::IDD>
-
-=item L<Interface Requirements Specification (IRS) DID|Docs::US_DOD::IRS>
-
-=item L<Operation Concept Description (OCD) DID|Docs::US_DOD::OCD>
-
-=item L<Specification Change Notice (SCN) DID|Docs::US_DOD::SCN>
-
-=item L<Software Design Specification (SDD) DID|Docs::US_DOD::SDD>
-
-=item L<Software Development Plan (SDP) DID|Docs::US_DOD::SDP> 
-
-=item L<Software Input and Output Manual (SIOM) DID|Docs::US_DOD::SIOM>
-
-=item L<Software Installation Plan (SIP) DID|Docs::US_DOD::SIP>
-
-=item L<Software Programmer's Manual (SPM) DID|Docs::US_DOD::SPM>
-
-=item L<Software Product Specification (SPS) DID|Docs::US_DOD::SPS>
-
-=item L<Software Requirements Specification (SRS) DID|Docs::US_DOD::SRS>
-
-=item L<System or Segment Design Document (SSDD) DID|Docs::US_DOD::SSDD>
-
-=item L<System or Subsystem Specification (SSS) DID|Docs::US_DOD::SSS>
-
-=item L<Software Test Description (STD) DID|Docs::US_DOD::STD>
-
-=item L<Software Test Plan (STP) DID|Docs::US_DOD::STP>
-
-=item L<Software Test Report (STR) DID|Docs::US_DOD::STR>
-
-=item L<Software Transition Plan (STrP) DID|Docs::US_DOD::STrP>
-
-=item L<Software User Manual (SUM) DID|Docs::US_DOD::SUM>
-
-=item L<Software Version Description (SVD) DID|Docs::US_DOD::SVD>
-
-=item L<Version Description Document (VDD) DID|Docs::US_DOD::VDD>
-
-=back
+L<Test::STD::Scrub|Test::STD::Scrub>
 
 =for html
 <hr>
@@ -513,13 +413,13 @@ US DOD 2167A automation are as follows:
 __DATA__
 
 DISTNAME: Test-STD-Scrub^
-VERSION : 0.01^
+VERSION : 0.02^
 REPOSITORY_DIR: packages^
 FREEZE: 1^
 
-PREVIOUS_DISTNAME: Test-TestUtil^
-PREVIOUS_RELEASE: 0.04^
-REVISION: -^
+PREVIOUS_DISTNAME:  ^
+PREVIOUS_RELEASE: 0.01^
+REVISION: A^
 AUTHOR  : SoftwareDiamonds.com E<lt>support@SoftwareDiamonds.comE<gt>^
 ABSTRACT: Utilites to wild card parts of a text file for comparisons^
 TITLE   : Test::STD::Scrub - Utilites to wild card parts of a text file for comparisons^
@@ -539,18 +439,19 @@ COMPRESS: gzip^
 COMPRESS_SUFFIX: gz^
 
 RESTRUCTURE:  ^
-CHANGE2CURRENT:  
-  return if $file =~ s=lib/Test/TestUtil.pm=lib/Test/STD/Scrub.pm=;
-  return if $file =~ s=t/Test/TestUtil/TestUtil=t/Test/STD/Scrub=;
-^
-
+CHANGE2CURRENT:  ^
 
 AUTO_REVISE: 
 lib/Test/STD/Scrub.pm
-t/Test/STD/Scrub.t
+t/Test/STD/Scrub.*
 ^
 
-PREREQ_PM: File::FileUtil^
+PREREQ_PM: 
+'File::TestPath' => '0',
+'File::SmartNL' => '0',
+'File::Package' => '0',
+'Test::Tech' => '1.08',
+^
 
 TESTS: t/Test/STD/Scrub.t^
 
@@ -559,6 +460,10 @@ EXE_FILES:  ^
 CHANGES:
 
 The changes to the previous version are as follows:
+
+\=over 4
+
+\=item Test::STD::Scrub 0.01
 
 \=over 4
 
@@ -584,6 +489,12 @@ Added the scrub_data and scrub_probe methods
 
 \=back
 
+\=item Test::STD::Scrub 0.01
+
+Use the new modules from the break-up of the "File::FileUtil" module
+
+\=back
+
 ^
 
 DOCUMENT_OVERVIEW:
@@ -594,6 +505,11 @@ utilize and track this release.
 ^
 
 CAPABILITIES:
+The system is the Perl programming language software.
+As established by the Perl referenced documents,
+program modules, such the 
+"L<Test::STD::Scrub|Test::STD::Scrub>" module, extend the Perl language.
+
 When comparing text there are small snippets such as version numbers and dates
 that should be wild carded out and not influence the comparisions.
 The Test::STD:Scrub module replaces these small snippets with invariant snippet.
@@ -611,21 +527,14 @@ of the 2167A  modules "Test::STDmaker" (testing) and "ExtUtils::SVDmaker"
 
 The dependency of the program modules in the US DOD STD2167A bundle is as follows:
  
- File::FileUtil 
+ File::Package File::SmartNL File::TestPath 
    Test::STD::Scrub
      Test::Tech
-        DataPort::FileType::FormDB DataPort::DataFile Test::STD::STDutil
+        DataPort::FileType::FormDB DataPort::DataFile DataPort::Maker Test::STD::STDutil
             Test::STDmaker ExtUtils::SVDmaker
 ^
 
 PROBLEMS:
-The Test::STD::TestUtil program module is the foundation
-program module for testing
-and must be rock solid to ensure the quality of
-the Units that it will be testing.
-Testing of this module should be proactive and
-not dumped upon the end-user.
-
 There is still much work needed to ensure the quality 
 of this module as follows:
 
@@ -657,13 +566,6 @@ Test::TestUtil POD.
 
 \=back
 
-Note the 
-L<File::FileUtil|File::FileUtil>, 
-L<Test::STD::STDutil|Test::STD::STDutil> 
-L<Test::STD::Scrub|Test::STD::Scrub> 
-program modules breaks up 
-the Test::TestUtil program module
-and Test::TestUtil has disappeared.
 ^
 
 LICENSE:
@@ -746,9 +648,9 @@ extension for a Perl test script file
 
 Data Item Description
 
-\=item POD
+\=item DOD
 
-Plain Old Documentation
+Department of Defense
 
 \=item STD
 
@@ -758,129 +660,15 @@ Software Test Description
 
 Software Version Description
 
+\=item US
+
+United States
+
 \=back
 ^
 
 SEE_ALSO:
-
-Modules with end-user functional interfaces 
-relating to US DOD 2167A automation are
-as follows:
-
-\=over 4
-
-\=item L<Test::STDmaker|Test::STDmaker>
-
-\=item L<ExtUtils::SVDmaker|ExtUtils::SVDmaker>
-
-\=item L<DataPort::FileType::FormDB|DataPort::FileType::FormDB>
-
-\=item L<DataPort::DataFile|DataPort::DataFile>
-
-\=item L<Test::Tech|Test::Tech>
-
-\=item L<Test|Test>
-
-\=item L<Data::Dumper|Data::Dumper>
-
-\=item L<Test::STD::Scrub|Test::STD::Scrub>
-
-\=item L<Test::STD::STDutil|Test::STD::STDutil>
-
-\=item L<File::FileUtil|File::FileUtil>
-
-\=back
-
-The design modules for L<Test::STDmaker|Test::STDmaker>
-have no other conceivable use then to support the
-L<Test::STDmaker|Test::STDmaker> functional interface. 
-The  L<Test::STDmaker|Test::STDmaker>
-design modules are as follows:
-
-\=over 4
-
-\=item L<Test::STD::Check|Test::STD::Check>
-
-\=item L<Test::STD::FileGen|Test::STD::FileGen>
-
-\=item L<Test::STD::STD2167|Test::STD::STD2167>
-
-\=item L<Test::STD::STDgen|Test::STD::STDgen>
-
-\=item L<Test::STDtype::Demo|Test::STDtype::Demo>
-
-\=item L<Test::STDtype::STD|Test::STDtype::STD>
-
-\=item L<Test::STDtype::Verify|Test::STDtype::Verify>
-
-\=back
-
-
-Some US DOD 2167A Software Development Standard, DIDs and
-other related documents that complement the 
-US DOD 2167A automation are as follows:
-
-\=over 4
-
-\=item L<US DOD Software Development Standard|Docs::US_DOD::STD2167A>
-
-\=item L<US DOD Specification Practices|Docs::US_DOD::STD490A>
-
-\=item L<Computer Operation Manual (COM) DID|Docs::US_DOD::COM>
-
-\=item L<Computer Programming Manual (CPM) DID)|Docs::US_DOD::CPM>
-
-\=item L<Computer Resources Integrated Support Document (CRISD) DID|Docs::US_DOD::CRISD>
-
-\=item L<Computer System Operator's Manual (CSOM) DID|Docs::US_DOD::CSOM>
-
-\=item L<Database Design Description (DBDD) DID|Docs::US_DOD::DBDD>
-
-\=item L<Engineering Change Proposal (ECP) DID|Docs::US_DOD::ECP>
-
-\=item L<Firmware support Manual (FSM) DID|Docs::US_DOD::FSM>
-
-\=item L<Interface Design Document (IDD) DID|Docs::US_DOD::IDD>
-
-\=item L<Interface Requirements Specification (IRS) DID|Docs::US_DOD::IRS>
-
-\=item L<Operation Concept Description (OCD) DID|Docs::US_DOD::OCD>
-
-\=item L<Specification Change Notice (SCN) DID|Docs::US_DOD::SCN>
-
-\=item L<Software Design Specification (SDD) DID|Docs::US_DOD::SDD>
-
-\=item L<Software Development Plan (SDP) DID|Docs::US_DOD::SDP> 
-
-\=item L<Software Input and Output Manual (SIOM) DID|Docs::US_DOD::SIOM>
-
-\=item L<Software Installation Plan (SIP) DID|Docs::US_DOD::SIP>
-
-\=item L<Software Programmer's Manual (SPM) DID|Docs::US_DOD::SPM>
-
-\=item L<Software Product Specification (SPS) DID|Docs::US_DOD::SPS>
-
-\=item L<Software Requirements Specification (SRS) DID|Docs::US_DOD::SRS>
-
-\=item L<System or Segment Design Document (SSDD) DID|Docs::US_DOD::SSDD>
-
-\=item L<System or Subsystem Specification (SSS) DID|Docs::US_DOD::SSS>
-
-\=item L<Software Test Description (STD) DID|Docs::US_DOD::STD>
-
-\=item L<Software Test Plan (STP) DID|Docs::US_DOD::STP>
-
-\=item L<Software Test Report (STR) DID|Docs::US_DOD::STR>
-
-\=item L<Software Transition Plan (STrP) DID|Docs::US_DOD::STrP>
-
-\=item L<Software User Manual (SUM) DID|Docs::US_DOD::SUM>
-
-\=item L<Software Version Description (SVD) DID|Docs::US_DOD::SVD>
-
-\=item L<Version Description Document (VDD) DID|Docs::US_DOD::VDD>
-
-\=back
+L<Test::STD::Scrub|Test::STD::Scrub>
 
 ^
 

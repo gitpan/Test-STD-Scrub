@@ -12,8 +12,8 @@ use warnings::register;
 use SelfLoader;
 
 use vars qw($VERSION $DATE $FILE);
-$VERSION = '1.07';
-$DATE = '2003/06/19';
+$VERSION = '1.08';
+$DATE = '2003/07/04';
 $FILE = __FILE__
 
 __DATA__
@@ -140,7 +140,7 @@ __END__
 
 =head1 NAME
   
-Test::STD::STDutil - generic functions that support Test::STDmaker
+Test::STD::STDutil - used to wild card out text used for comparison
 
 =head1 SYNOPSIS
 
@@ -152,7 +152,6 @@ Test::STD::STDutil - generic functions that support Test::STDmaker
   $scrubbed_text = Test::STD::Scrub->scrub_file_line($script_text)
   $scrubbed_text = Test::STD::Scrub->scrub_probe($script_text)
   $scrubbed_text = Test::STD::Scrub->scrub_test_file($script_text)
-
 
 
 =head1 DESCRIPTION
@@ -170,8 +169,6 @@ L<C<Test::STDmaker>|Test::STDmaker> and
 L<C<ExtUtils::SVDmaker>|ExtUtils::SVDmaker> packages has
 priority over backwards compatibility.
 
- 
-
 =head2 scrub_date_ticket
 
  $scrubbed_text = Test::STD::Scrub->scrub_date_ticket($script_text)
@@ -185,26 +182,6 @@ Applying the I<scrub_date_ticket> to the contents
 of both files before the comparision will 
 eliminate the data and ticket as factors in
 the comparision.
-
-For example,
-
- ==> $text
-
- Date: Feb 6 00 00 00 1969 +0000
- Subject: 20030506, This Week in Health
- X-SDticket: 20030205
- X-eudora-date: Feb 6 2000 00 00 2003 +0000
- X-SDmailit: dead Feb 5 2000 00 00 2003
- Sent email 20030205 to support.softwarediamonds.com
- 
- ==> Test::STD::Scrub->scrub_date_ticket($text)
-
- Date: Feb 6 00 00 00 1969 +0000
- Subject: XXXXXXXXX-X,  This Week in Health'
- X-SDticket: XXXXXXXXX-X
- X-eudora-date: Feb 6 00 00 00 1969 +0000
- X-SDmailit: dead Sat Feb 6 00 00 00 1969 +0000
- Sent email XXXXXXXXX-X to support.softwarediamonds.com
 
 =head2 scrub_date_version
 
@@ -220,18 +197,6 @@ of both files before the comparision will
 eliminate the date and version as factors in
 the comparision.
 
-For example,
-
- ==> $text
-
- $VERSION = \'0.01\';
- $DATE = \'2003/06/07\';
-
- ==> Test::STD::Scrub->scrub_date_version($text)
-
- $VERSION = '0.00;
- $DATE = 'Feb 6, 1969';
-
 =head2 scrub_file_line
 
  $scrubbed_text = Test::STD::Scrub->scrub_file_line($script_text)
@@ -245,16 +210,6 @@ Applying the I<scrub_file_line> to the contents
 of both files before the comparision will 
 eliminate the file and line as factors in
 the comparision.
-
-For example,
-
- ==> $text 
-
- ok 2 # (E:/User/SoftwareDiamonds/installation/t/Test/STDmaker/tgA1.t at line 123 TODO?!)';
-
- ==> Test::STD::Scrub->scrub_file_line($text)
-
- ok 2 # (xxxx.t at line 000 TODO?!)
 
 =head2 scrub_test_file
 
@@ -270,23 +225,128 @@ of both files before the comparision will
 eliminate the test file as a factor in
 the comparision.
 
-For example,
+=head1 REQUIREMENTS
 
- ==>$text
+Comming soon.
 
- Running Tests\n\nE:/User/SoftwareDiamonds/installation/t/Test/STDmaker/tgA1.1..16 todo 2 5;
+=head1 DEMONSTRATION
 
- ==> Test::STD::Scrub->scrub_test_file($text)
+ ~~~~~~ Demonstration overview ~~~~~
 
- Running Tests xxx.t 1..16 todo 2 5;
+Perl code begins with the prompt
+
+ =>
+
+The selected results from executing the Perl Code 
+follow on the next lines. For example,
+
+ => 2 + 2
+ 4
+
+ ~~~~~~ The demonstration follows ~~~~~
+
+ =>     use File::Spec;
+
+ =>     use File::Package;
+ =>     my $fp = 'File::Package';
+
+ =>     my $s = 'Test::STD::Scrub';
+
+ =>     my $loaded = '';
+ =>     my $actual_text = '';
+ =>     my $expected_text = '';
+ => my $errors = $fp->load_package($s)
+ => $errors
+ ''
+
+ => $s->scrub_file_line('ok 2 # (E:/t/Test/STDmaker/tgA1.t at line 123 TODO?!)')
+ 'ok 2 # (xxxx.t at line 000 TODO?!)'
+
+ => $s->scrub_test_file('Running Tests\n\nE:/t/Test/STDmaker/tgA1.1..16 todo 2 5;')
+ 'Running Tests xxx.t 1..16 todo 2 5;'
+
+ => $s->scrub_date_version('$VERSION = \'0.01\';\n$DATE = \'2003/06/07\';')
+ '$VERSION = '0.00';\n$DATE = 'Feb 6, 1969';'
+
+ => $actual_text = <<'EOF';
+ => Date: Apr 12 00 00 00 2003 +0000
+ => Subject: 20030506, This Week in Health'
+ => X-SDticket: 20030205
+ => X-eudora-date: Feb 6 2000 00 00 2003 +0000
+ => X-SDmailit: dead Feb 5 2000 00 00 2003
+ => Sent email 20030205-20030506 to support.softwarediamonds.com
+ => EOF
+
+ => $expected_text = <<'EOF';
+ => Date: Feb 6 00 00 00 1969 +0000
+ => Subject: XXXXXXXXX-X,  This Week in Health'
+ => X-SDticket: XXXXXXXXX-X
+ => X-eudora-date: Feb 6 00 00 00 1969 +0000
+ => X-SDmailit: dead Sat Feb 6 00 00 00 1969 +0000
+ => Sent email XXXXXXXXX-X to support.softwarediamonds.com
+ => EOF
+
+ => 1
+ => $s->scrub_date_ticket($actual_text)
+ 'Date: Feb 6 00 00 00 1969 +0000
+ Subject: XXXXXXXXX-X,  This Week in Health'
+ X-SDticket: XXXXXXXXX-X
+ X-eudora-date: Feb 6 00 00 00 1969 +0000
+ X-SDmailit: dead Sat Feb 6 00 00 00 1969 +0000
+ Sent email XXXXXXXXX-X to support.softwarediamonds.com
+ '
+
+ => $s->scrub_date('Going to happy valley 2003/06/07')
+ 'Going to happy valley 1969/02/06'
+
+ => $actual_text = <<'EOF';
+ => 1..8 todo 2 5;
+ => # OS            : MSWin32
+ => # Perl          : 5.6.1
+ => # Local Time    : Thu Jun 19 23:49:54 2003
+ => # GMT Time      : Fri Jun 20 03:49:54 2003 GMT
+ => # Number Storage: string
+ => # Test::Tech    : 1.06
+ => # Test          : 1.15
+ => # Data::Dumper  : 2.102
+ => # =cut 
+ => # Pass test
+ => ok 1
+ => EOF
+
+ => $expected_text = <<'EOF';
+ => 1..8 todo 2 5;
+ => # Pass test
+ => ok 1
+ => EOF
+
+ => 1
+ => $s->scrub_probe($actual_text)
+ '1..8 todo 2 5;
+ # Pass test
+ ok 1
+ '
+
+
+=head1 QUALITY ASSURANCE
+
+The module "t::Test::STD::Scrub" is the Software
+Test Description(STD) module for the "Test::STD::Scrub".
+module. 
+
+To generate all the test output files, 
+run the generated test script,
+run the demonstration script and include it results in the "Test::STD::Scrub" POD,
+execute the following in any directory:
+
+ tmake -test_verbose -replace -run -pm=t::Test::STD::Scrub
+
+Note that F<tmake.pl> must be in the execution path C<$ENV{PATH}>
+and the "t" directory containing  "t::Test::STD::Scrub" on the same level as 
+the "lib" directory that
+contains the "Test::STD::Scrub" module.
 
 =head1 NOTES
-
-=head2 AUTHOR
-
-The holder of the copyright and maintainer is
-
-E<lt>support@SoftwareDiamonds.comE<gt>
 
 =head2 COPYRIGHT NOTICE
 

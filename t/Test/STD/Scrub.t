@@ -6,14 +6,36 @@ use strict;
 use warnings;
 use warnings::register;
 
-use vars qw($VERSION $DATE);
-$VERSION = '0.04';
-$DATE = '2003/06/19';
+use vars qw($VERSION $DATE $FILE);
+$VERSION = '0.05';   # automatically generated file
+$DATE = '2003/07/04';
+$FILE = __FILE__;
 
+use Test::Tech;
+use Getopt::Long;
 use Cwd;
 use File::Spec;
-use File::FileUtil;
-use Test;
+use File::TestPath;
+
+##### Test Script ####
+#
+# Name: Scrub.t
+#
+# UUT: Test::STD::Scrub
+#
+# The module Test::STDmaker generated this test script from the contents of
+#
+# t::Test::STD::Scrub;
+#
+# Don't edit this test script file, edit instead
+#
+# t::Test::STD::Scrub;
+#
+#	ANY CHANGES MADE HERE TO THIS SCRIPT FILE WILL BE LOST
+#
+#       the next time Test::STDmaker generates this script file.
+#
+#
 
 ######
 #
@@ -22,124 +44,105 @@ use Test;
 # use a BEGIN block so we print our plan before Module Under Test is loaded
 #
 BEGIN { 
-   use vars qw($__restore_dir__ @__restore_inc__ $__tests__);
-
-   ########
-   # Create the test plan by supplying the number of tests
-   # and the todo tests
-   #
-   $__tests__ = 9;
-   plan(tests => $__tests__);
+   use vars qw( $__restore_dir__ @__restore_inc__);
 
    ########
    # Working directory is that of the script file
    #
    $__restore_dir__ = cwd();
-   my ($vol, $dirs, undef) = File::Spec->splitpath( $0 );
+   my ($vol, $dirs, undef) = File::Spec->splitpath(__FILE__);
    chdir $vol if $vol;
    chdir $dirs if $dirs;
 
    #######
    # Add the library of the unit under test (UUT) to @INC
    #
-   my $work_dir = cwd();
-   ($vol,$dirs) = File::Spec->splitpath( $work_dir, 'nofile');
-   my @dirs = File::Spec->splitdir( $dirs );
-   while( $dirs[-1] ne 't' ) { 
-       chdir File::Spec->updir();
-       pop @dirs;
-   };
-   @__restore_inc__ = @INC;
-   unshift @INC, cwd();  # include the current test directory
-   chdir File::Spec->updir();
-   my $lib_dir = File::Spec->catdir( cwd(), 'lib' );
-   unshift @INC, $lib_dir;
-   chdir $work_dir;
+   @__restore_inc__ = File::TestPath->test_lib2inc();
+
+   unshift @INC, File::Spec->catdir( cwd(), 'lib' ); 
+
+   ##########
+   # Pick up a output redirection file and tests to skip
+   # from the command line.
+   #
+   my $test_log = '';
+   GetOptions('log=s' => \$test_log);
+
+   ########
+   # Create the test plan by supplying the number of tests
+   # and the todo tests
+   #
+   require Test::Tech;
+   Test::Tech->import( qw(plan ok skip skip_tests tech_config) );
+   plan(tests => 8);
 
 }
+
+
 
 END {
 
-    #########
-    # Restore working directory and @INC back to when enter script
-    #
-    @INC = @__restore_inc__;
-    chdir $__restore_dir__;
+   #########
+   # Restore working directory and @INC back to when enter script
+   #
+   @INC = @__restore_inc__;
+   chdir $__restore_dir__;
 }
 
-#######
-# Create a File::FileUtil object
-#
-my $fu = 'File::FileUtil';
-my $s = 'Test::STD::Scrub';
+   # Perl code from C:
+    use File::Spec;
 
-####
-#
-# ok: 1
-#
-# R:
-#
-print "# UUT not loaded.\n";
-my $loaded = $fu->is_package_loaded('Test::STD::Scrub');
-ok( $loaded, ''); # actual results
+    use File::Package;
+    my $fp = 'File::Package';
 
-####
-#
-# ok: 2
-#
-# R:
-#
-print "# Load UUT.\n";
-my $errors = $fu->load_package( 'Test::STD::Scrub' );
-ok($errors,'');
-skip_rest( $errors, 2 );
+    my $s = 'Test::STD::Scrub';
+
+    my $loaded = '';
+    my $actual_text = '';
+    my $expected_text = '';
+
+ok(  $loaded = $fp->is_package_loaded($s), # actual results
+      '', # expected results
+     '',
+     'UUT not loaded');
+
+#  ok:  1
+
+   # Perl code from C:
+my $errors = $fp->load_package($s);
+
+skip_tests( 1 ) unless skip(
+      $loaded, # condition to skip test   
+      $errors, # actual results
+      '',  # expected results
+      '',
+      'Load UUT');
  
-####
-#
-# ok: 3
-#
-# R:
-#
-print "# No pod errors\n";
-ok( $fu->pod_errors( 'Test::STD::Scrub'), 0);
+#  ok:  2
 
+ok(  $s->scrub_file_line('ok 2 # (E:/t/Test/STDmaker/tgA1.t at line 123 TODO?!)'), # actual results
+     'ok 2 # (xxxx.t at line 000 TODO?!)', # expected results
+     '',
+     'scrub_file_line');
 
+#  ok:  3
 
-####
-#
-# ok: 4
-#
-print "# scrub_file_line\n";
-my $text = 'ok 2 # (E:/User/SoftwareDiamonds/installation/t/Test/STDmaker/tgA1.t at line 123 TODO?!)';
-ok($s->scrub_file_line($text), 'ok 2 # (xxxx.t at line 000 TODO?!)');
+ok(  $s->scrub_test_file('Running Tests\n\nE:/t/Test/STDmaker/tgA1.1..16 todo 2 5;'), # actual results
+     'Running Tests xxx.t 1..16 todo 2 5;', # expected results
+     '',
+     'scrub_test_file');
 
-####
-#
-# ok: 5
-#
-# R:
-#
-print "# scrub_test_file\n";
-$text = 'Running Tests\n\nE:/User/SoftwareDiamonds/installation/t/Test/STDmaker/tgA1.1..16 todo 2 5;';
-ok($s->scrub_test_file($text),'Running Tests xxx.t 1..16 todo 2 5;');
+#  ok:  4
 
-####
-#
-# ok: 6
-#
-print "# scrub_date_version\n";
-$text = '$VERSION = \'0.01\';\n$DATE = \'2003/06/07\';';
-ok($s->scrub_date_version($text),'$VERSION = \'0.00\';\n$DATE = \'Feb 6, 1969\';');
+ok(  $s->scrub_date_version('$VERSION = \'0.01\';\n$DATE = \'2003/06/07\';'), # actual results
+     '$VERSION = \'0.00\';\n$DATE = \'Feb 6, 1969\';', # expected results
+     '',
+     'scrub_date_version');
 
-####
-#
-# ok: 7
-#
-# R:
-#
-print "# scrub_date_ticket\n";
+#  ok:  5
 
-$text = <<'EOF';
+   # Perl code from C:
+$actual_text = <<'EOF';
 Date: Apr 12 00 00 00 2003 +0000
 Subject: 20030506, This Week in Health'
 X-SDticket: 20030205
@@ -148,7 +151,7 @@ X-SDmailit: dead Feb 5 2000 00 00 2003
 Sent email 20030205-20030506 to support.softwarediamonds.com
 EOF
 
-my $expected_text = <<'EOF';
+$expected_text = <<'EOF';
 Date: Feb 6 00 00 00 1969 +0000
 Subject: XXXXXXXXX-X,  This Week in Health'
 X-SDticket: XXXXXXXXX-X
@@ -157,27 +160,24 @@ X-SDmailit: dead Sat Feb 6 00 00 00 1969 +0000
 Sent email XXXXXXXXX-X to support.softwarediamonds.com
 EOF
 
-ok($s->scrub_date_ticket($text), $expected_text);
+1;
 
+ok(  $s->scrub_date_ticket($actual_text), # actual results
+     $expected_text, # expected results
+     '',
+     'scrub_date_ticket');
 
-####
-#
-# ok: 8
-#
-print "# scrub_date\n";
-$text = 'Going to happy valley 2003/06/07';
-ok($s->scrub_date($text),'Going to happy valley 1969/02/06');
+#  ok:  6
 
+ok(  $s->scrub_date('Going to happy valley 2003/06/07'), # actual results
+     'Going to happy valley 1969/02/06', # expected results
+     '',
+     'scrub_date');
 
-####
-#
-# ok: 9
-#
-# R:
-#
-print "# scrub_probe\n";
+#  ok:  7
 
-$text = <<'EOF';
+   # Perl code from C:
+$actual_text = <<'EOF';
 1..8 todo 2 5;
 # OS            : MSWin32
 # Perl          : 5.6.1
@@ -198,27 +198,15 @@ $expected_text = <<'EOF';
 ok 1
 EOF
 
-ok($s->scrub_probe($text), $expected_text);
+1;
 
+ok(  $s->scrub_probe($actual_text), # actual results
+     $expected_text, # expected results
+     '',
+     'scrub_probe');
 
-####
-# 
-# Support:
-#
-# The ok user caller to look up the stack. If nothing there,
-# ok produces a warining. Thus, burying it in a subroutine eliminates
-# these warning.
-#
-sub skip_rest
-{
-    my ($results, $test_num) = @_;
-    if( $results ) {
-        for (my $i=$test_num; $i < $__tests__; $i++) { skip(1,0,0) };
-        exit 1;
-    }
-}
+#  ok:  8
 
-__END__
 
 =head1 NAME
 
@@ -226,7 +214,21 @@ Scrub.t - test script for Test::STD::Scrub
 
 =head1 SYNOPSIS
 
- Scrub.t 
+ Scrub.t -log=I<string>
+
+=head1 OPTIONS
+
+All options may be abbreviated with enough leading characters
+to distinguish it from the other options.
+
+=over 4
+
+=item C<-log>
+
+Scrub.t uses this option to redirect the test results 
+from the standard output to a log file.
+
+=back
 
 =head1 COPYRIGHT
 
